@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project default="compile" basedir=".">
+	
+	<path id="source.class.path">
+		<dirset dir="bin" includes="**/**"/>
+	</path>
+
+	<path id="ext.class.path">
+		<fileset dir="lib" includes="*.jar"/>
+	</path>		
+	
+	<path id="class.path">
+		<path refid="source.class.path" />
+		<path refid="ext.class.path" />
+	</path>
+				
+	<target name="compile">
+		<echo message="compiling MOWCATL Data Generation classes"/>
+		<javac srcdir="src" destdir="bin" classpathref="ext.class.path" verbose="true"/>
+		<copy file="src/firm.token" todir="bin"/>	
+	</target>
+	
+	<target name="GenerateXML" depends="compile">
+		<echo message="Generating the data for MOWCATL"/>
+		<java classname="main.CreateXML" classpathref="class.path" fork="true">
+		<!-- 	 <jvmarg value="-DFIRM_HOME=iiop://firm.unl.edu:3306" />  -->
+		
+		<jvmarg value="-DFIRM_HOME=iiop://firm2.unl.edu:3700" /> 
+			<arg line="InputConfig.txt MowcatlInput.xml StartDate.txt Station.txt"/>	
+		</java>	
+	</target>
+  
+</project>

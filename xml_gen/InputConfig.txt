@@ -1,0 +1,11 @@
+antecedent=PD12,SHRD,SST,POT,RHLO,LAT,LON,USTM,U200,REFC,PSLV
+consequent=RI
+minfreq=100
+minconf=0.1
+antwidth=1
+conswidth=1
+lagwidth=1
+episodetype=parallel
+allowrepeats=true
+ruletype=1
+lagtype=max

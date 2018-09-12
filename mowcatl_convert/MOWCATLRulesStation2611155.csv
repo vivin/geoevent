@@ -1,0 +1,14 @@
+Station ID,2611155
+Station Name,YORK
+Starting Date for Data,1-1951
+MinFreq,10
+MinConf,0.3
+AntWidth,4
+ConsWidth,4
+LagWidth,2
+EpisodeType,parallel
+AllowRepeats,true
+Anticedents,,"SOI_Moderately_Dry, SOI_Severely_Dry, SOI_Extremely_Dry, MEI_Extremely_Dry, MEI_Severely_Dry, MEI_Moderately_Dry, NAO_Extremely_Dry, NAO_Severely_Dry, NAO_Moderately_Dry, PDO_Extremely_Dry, PDO_Severely_Dry, PDO_Moderately_Dry, PNA_Extremely_Dry, PNA_Severely_Dry, PNA_Moderately_Dry"
+Consequents,,"3_Month_SPI_Extremely_Dry, 3_Month_SPI_Severely_Dry, 3_Month_SPI_Moderately_Dry, 6_Month_SPI_Extremely_Dry, 6_Month_SPI_Severely_Dry, 6_Month_SPI_Moderately_Dry, 9_Month_SPI_Extremely_Dry, 9_Month_SPI_Severely_Dry, 9_Month_SPI_Moderately_Dry, 12_Month_SPI_Extremely_Dry, 12_Month_SPI_Severely_Dry, 12_Month_SPI_Moderately_Dry, PDSI_Extremely_Dry, PDSI_Severely_Dry, PDSI_Moderately_Dry"
+
+Ant List,Cons List,Start,Stop,Confidence,Support,Coverage,Consequent Support,JMeasure

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<project default="compile" basedir=".">
+	
+	<path id="source.class.path">
+		<dirset dir="bin" includes="**/**"/>
+	</path>
+	
+	<path id="class.path">
+		<path refid="source.class.path" />
+	</path>
+
+	<target name="compile">
+		<echo message="compiling MowcatlConvert classes"/>
+		<javac srcdir="src" destdir="bin"  verbose="true"/>
+	</target>
+	
+	<target name="MowcatlConvert" depends="compile">
+		<echo message="Converting the MOWCATL results into a spreadsheet"/>
+		<java classname="main.mowcatl_convert" classpathref="class.path" fork="true">
+			<arg line="MowcatlOutput.xml StartDate.txt Station.txt"/>	
+		</java>	
+	</target>
+  
+</project>
