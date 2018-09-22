@@ -24,8 +24,11 @@ int main(int argc, char* argv[]){
 	Mowcatl mo;
 	ifstream in;
 	ofstream out;
-	string infile = "../data/xml_gen/output/paper_general_input.xml";
-	string outfile ="../data/mowcatl/paper_output.xml";
+	string infile = "../data/xml_gen/output/paper_mocatl_input.xml";
+	string outfile ="../data/mowcatl/paper_mocatl_output.xml";
+
+	/*string infile = "../data/xml_gen/output/ships_mocatl_general_input.xml";
+	string outfile ="../data/mowcatl/ships_mocatloutput.xml";*/
 	string paramXML ="";
 	string resultXML, thestr;
 	

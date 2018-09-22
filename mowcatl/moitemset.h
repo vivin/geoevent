@@ -60,6 +60,7 @@ typedef vector<moitem *>::const_reverse_iterator  rconst_moITEM_ITR;
 typedef vector<moITEM_ITR> int_vec;
 typedef vector<moitemset> fc_type;
 
+//Ê²Ã´ÊÇitemset?
 class moitemset
 {
 public:

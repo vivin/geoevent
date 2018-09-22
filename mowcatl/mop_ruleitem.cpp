@@ -130,7 +130,8 @@ void mop_ruleitem::recordmobetween(const moitem* faitem, const moitem* fcitem, i
 		{
 			if ( ((*consitr).get_start() == (*antitr).get_start() +lag ) //CHANGED FOR FIXED
 				&& (*antitr).get_stop() <= (*consitr).get_stop()
-				&& (*consitr).get_start() > (*antitr).get_start())
+				&& (*consitr).get_start() >= (*antitr).get_start())//modify by yun
+				//&& (*consitr).get_start() > (*antitr).get_start())
 				//Tsegaye does NOT want a zero lag for serial episodes
 			{
 				occur one((*antitr).get_start(),(*consitr).get_stop());

@@ -50,6 +50,11 @@ string XMLIntFace::runMo(string paramXML){
 
 	//when the window width is 1 timestamp, always compute as parallel episodes,
 	//since there really is no serial episode then.
+	//need validation (yun)
+	/*An episode is of type parallel
+	if no order is specified and of type serial if the events of the episode have a
+	fixed order. An episode is injective if no event type occurs more than once in the
+	episode.*/
 	if (wina == 1 && lag == 0 && winc==1) {
 		if (type == 's') {
 			type = 'p';
@@ -131,13 +136,13 @@ string XMLIntFace::runMo(string paramXML){
 		return errorHandler.toXML();
 	}
 	
-	
 	//Create the XML output
 	resultXML = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>";
 	resultXML += "<Results><Status>SUCCESS</Status>";
 	//Add the parameters used to run the algorithm to the result XML string
 	resultXML += outputparams(paramXML, type);
 	
+	//what is p q s t (yun)
 	int k = 0;
 	switch(type)
 	{
