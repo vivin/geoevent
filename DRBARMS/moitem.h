@@ -171,11 +171,15 @@ public:
 	virtual double get_support() const ;
 	//return the support
 
-	virtual double get_density() const ;
+	virtual double get_density_ratio() const ;
+	virtual double get_local_density() const ;
+	virtual double get_relative_density_ratio() const ;
 
 	virtual void set_support(int in_support);
 	//set the support
-	virtual void set_density(double in_density);
+	virtual void set_density_ratio(double in_density);
+	virtual void set_local_density(double in_density);
+	virtual void set_relative_density_ratio(double in_density);
 
 	virtual void resetfreq();
 
@@ -203,7 +207,8 @@ public:
 	virtual int get_antsupport() const;
 	virtual void set_conssupport(int in_support);
 	virtual int get_conssupport() const;
-	virtual double cal_denisty_ratio()const;
+	virtual double cal_density_ratio()const;
+	virtual double cal_local_density()const;
 
 	//serial ruleitem member functions
 	virtual void insertant(const t_stamp_vec& e) ;
@@ -228,7 +233,9 @@ protected:
 	static int Aindex(const event& A, const event_set& f_list, int size);
 	static int indexoftimeA(const time_stamp& A, const t_stamp_vec& TimeF, int size);
 
-	double density;
+	double density_ratio;
+	double local_density;
+	double relative_density_ratio;
 };
 
 #endif //moITEM_H

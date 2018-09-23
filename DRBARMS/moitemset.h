@@ -194,7 +194,7 @@ void addtimestampitems(const event_vec_vec& TimeFvec, const event_set& B, int so
 	//used in the representative morule generation process to find the smallest
 	//episode that contains moitem X from all of the itemsets
 
-	void combine(const moitemset& fa, moitemset& garbage, const fc_type& fc, char type, int lag, int min_fr, char lag_type);
+	void combine(const moitemset& fa, moitemset& garbage, const fc_type& fc, char type, int lag, double min_density, char lag_type);
 //combine the ant and cons into ruleitems
 
 	void putinsplit(fc_type& split_fc, int& k) const;

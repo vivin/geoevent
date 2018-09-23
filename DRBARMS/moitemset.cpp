@@ -500,6 +500,12 @@ void moitemset::addDensity(moitemset& fca_k_b, moitemset& garbage,
 
 	bool done = false;
 	int i;
+
+	//for relative density
+	moitem_vec tmpis;
+	double local_density_sum = 0.0;
+	int local_density_count = 0;
+
 	for (const_moITEM_ITR faitr = fca_k_b.is.begin(); faitr != fca_k_b.is.end();
 			++faitr) {
 
@@ -546,10 +552,17 @@ void moitemset::addDensity(moitemset& fca_k_b, moitemset& garbage,
 				};
 
 				p->recordmobetween(*faitr, *fcitr, lag, lag_type);
-				double ratio = p->cal_denisty_ratio();
-				p->set_density(ratio);
+				double ratio = p->cal_density_ratio();
+				//p->set_density(ratio);
 				if (ratio >= min_density){
-					insertitem(*faitr);
+					double localDensity = p->cal_local_density();
+					(*faitr)->set_local_density(localDensity);
+					(*faitr)->set_density_ratio(ratio);
+					//insertitem(*faitr);
+
+					local_density_sum += localDensity;
+					local_density_count += 1;
+					tmpis.push_back(*faitr);
 				}
 				p->clear();
 				delete p;
@@ -572,6 +585,19 @@ void moitemset::addDensity(moitemset& fca_k_b, moitemset& garbage,
 			}
 		}				//end of while (!done)
 	}				// end of faitr
+
+
+	//add relative density
+	for (const_moITEM_ITR faitr = tmpis.begin(); faitr != tmpis.end();
+				++faitr) {
+
+		double local_denisty = (*faitr)->get_local_density();
+		double relative_density_ratio = (local_denisty * local_density_count) / local_density_sum ;
+		if(tmpis.size() ==1 || relative_density_ratio > min_density){
+			(*faitr)->set_relative_density_ratio(relative_density_ratio);
+			insertitem(*faitr);
+		}
+	}
 
 }	//end of while (!done)
 
@@ -1790,7 +1816,7 @@ void moitemset::loop1serial(const fc_type& split_fac, double c,
 } //end loop 1 serial
 
 void moitemset::combine(const moitemset& fa, moitemset& garbage,
-		const fc_type& fc, char type, int lag, int min_fr1, char lag_type)
+		const fc_type& fc, char type, int lag, double min_density, char lag_type)
 
 //combine the ant and cons into ruleitems
 		{
@@ -1855,10 +1881,10 @@ void moitemset::combine(const moitemset& fa, moitemset& garbage,
 //				p->output(cout);
 //				system("pause");
 
-				double ratio = p->cal_denisty_ratio();
-				p->set_density(ratio);
-				//if (p->cal_denisty_ratio() >= 1.2)
-				if (p->get_support() >= min_fr1) {
+				double ratio = p->cal_density_ratio();
+				p->set_density_ratio(ratio);
+				if (ratio >= 1.2){
+				//if (p->get_support() >= min_fr1) {
 					//	cout<<"Keep ";
 					//	p->output(cout);
 					insertitem(p);
@@ -1910,7 +1936,7 @@ void moitemset::addrules(double c, moruleset& REAR, int i) {
 			r.insert((*itr)->get_antepisode(), double(X_antsupport),
 					(*itr)->get_consepisode(), double(i_freq),
 					(*itr)->get_last_occurrence(), (*itr)->get_conssupport(),
-					(*itr)->get_density());
+					(*itr)->get_density_ratio());
 //			r.output(cout);  //for testing
 //			system("pause");
 			if (!r.cons_empty() && !REAR.contain(r))

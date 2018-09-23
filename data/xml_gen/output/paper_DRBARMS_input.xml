@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Params>
-	<MinFreq>3</MinFreq>
 	<MinConf>0.37</MinConf>
 	<MinDensity>1.2</MinDensity>
 	<AntWidth>1</AntWidth>

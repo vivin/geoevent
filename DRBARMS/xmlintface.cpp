@@ -93,25 +93,25 @@ string XMLIntFace::runMo(string paramXML){
 		case 'p':
 		case 'q':
 
-			Generate_Parallel_CTMINEPI(eList, min_freq, min_density, k, wina, winc, A, C, type, epCntsXML);
+			Generate_Parallel_CTMINEPI(eList, min_density, k, wina, winc, A, C, type, epCntsXML);
 			if(timer->isTimeOver()){
 				errorHandler.addError("Maximum Time Limit Exceeded",2000);
 				return errorHandler.toXML();
 			}
 
-			Generate_MOWCATL_RULES(min_conf, k, lag, min_freq, type, A, C,ruletype, lagtype, ruleListXML, ruleCntsXML);
+			Generate_MOWCATL_RULES(min_conf, min_density, k, lag, type, A, C,ruletype, lagtype, ruleListXML, ruleCntsXML);
 			//generate the CT MINEPI representative association rules
 		    //generate the first set of minimal occurrences from the file
 			break;
 		case 's':
 		case 't':
-			Generate_Serial_CTMINEPI(eList, min_freq, min_density, k, wina, winc, A, C, type, eSetLen, TimeFvec, epCntsXML);
+			Generate_Serial_CTMINEPI(eList, min_density, k, wina, winc, A, C, type, eSetLen, TimeFvec, epCntsXML);
 			if(timer->isTimeOver()){
 				errorHandler.addError("Maximum Time Limit Exceeded",2000);
 				return errorHandler.toXML();
 			}				
 			
-			Generate_MOWCATL_RULES(min_conf, k, lag, min_freq, type, A, C,ruletype, lagtype, ruleListXML, ruleCntsXML);
+			Generate_MOWCATL_RULES(min_conf, min_density, k, lag, type, A, C,ruletype, lagtype, ruleListXML, ruleCntsXML);
 			//generate the CT MINEPI representative association rules
 			break;
 		default:
@@ -222,7 +222,7 @@ string XMLIntFace::outputparams(string &inputXML, char &type)
 	return paramsXML;
 }
 
-void XMLIntFace::Generate_Parallel_CTMINEPI(string eList, int min_fr, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, string &epCntsXML)
+void XMLIntFace::Generate_Parallel_CTMINEPI(string eList,double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, string &epCntsXML)
 {
 	int Candidates=0;
 	int FrequentEpisodes=0;
@@ -247,8 +247,10 @@ void XMLIntFace::Generate_Parallel_CTMINEPI(string eList, int min_fr, double min
 	//fc[0].addfreq(fcc[k], garbage, min_freq);
 	fc[0].addfreq(fcc[k], garbage, 0);
 	fa[0].addDensity(fca[k], garbage, fc, type, lag, min_density, lagtype);
-	//garbage.cleanup();
 
+	//relative density ratio
+
+	//garbage.cleanup();
 
 	FrequentEpisodes += fa[k].access_size();
 	FrequentEpisodes += fc[k].access_size();
@@ -484,7 +486,7 @@ void XMLIntFace::Generate_Parallel_CTMINEPI(string eList, int min_fr, double min
 //	cout<<"k="<<k<<endl;
 //	system("pause");
 
-	epCntsXML = outputEpisodeCounts(double(min_fr)/fa[k].access_num_records() , Candidates, FrequentEpisodes, Iterations, Time);
+	epCntsXML = outputEpisodeCounts(double(fa[k].access_num_records()) , Candidates, FrequentEpisodes, Iterations, Time);
 	
 	//garbage.cleanup();
 /*	//testing:
@@ -501,7 +503,7 @@ void XMLIntFace::Generate_Parallel_CTMINEPI(string eList, int min_fr, double min
 
 } //end Generate_Parallel_CTMINEPI
 
-void XMLIntFace::Generate_MOWCATL_RULES(double min_conf, int maxk, int lag, int min_fr1, char type, const event_set& T, const event_set& C,int ans, char lag_type, string& ruleListXML, string& ruleCntsXML)
+void XMLIntFace::Generate_MOWCATL_RULES(double min_conf, double min_density, int maxk, int lag, char type, const event_set& T, const event_set& C,int ans, char lag_type, string& ruleListXML, string& ruleCntsXML)
 {
 
 
@@ -526,7 +528,7 @@ void XMLIntFace::Generate_MOWCATL_RULES(double min_conf, int maxk, int lag, int 
 //			cout<<"i="<<i<<endl;
 		if (!fa[i].empty()){
 			fac[i].setTimer(timer);
-			fac[i].combine(fa[i], garbage, fc, type,lag, min_fr1, lag_type);
+			fac[i].combine(fa[i], garbage, fc, type,lag, min_density, lag_type);
 		}
 			
 		if(timer->isTimeOver()){
@@ -801,7 +803,7 @@ void XMLIntFace::Generate_MOWCATL_RULES(double min_conf, int maxk, int lag, int 
 
 }
 
-void XMLIntFace::Generate_Serial_CTMINEPI(string eList, int min_fr, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, int sources, const event_vec_vec& TimeFvec, string &epCntsXML)
+void XMLIntFace::Generate_Serial_CTMINEPI(string eList, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, int sources, const event_vec_vec& TimeFvec, string &epCntsXML)
 {
 
 	int Candidates=0;
@@ -1058,7 +1060,7 @@ void XMLIntFace::Generate_Serial_CTMINEPI(string eList, int min_fr, double min_d
 
 	unsigned int Time = time(0) - BeginTime;
 	
-	epCntsXML = outputEpisodeCounts(double(min_fr)/fa[k].access_num_records() , Candidates, FrequentEpisodes, Iterations, Time);
+	epCntsXML = outputEpisodeCounts(double(fa[k].access_num_records()) , Candidates, FrequentEpisodes, Iterations, Time);
 
 	//garbage.cleanup();
 /*	//testing:
@@ -1320,7 +1322,7 @@ void XMLIntFace::getParameters(string paramXML){
 	//Extract all of the parameters from the xml string 
 	maxTimeAllowed = atoi((StringHelper::extractXML(paramXML,"MaxTimeAllowed",1,true)).c_str());
 
-	min_freq = atoi((StringHelper::extractXML(paramXML,"MinFreq",1,true)).c_str());
+	//min_freq = atoi((StringHelper::extractXML(paramXML,"MinFreq",1,true)).c_str());
 	min_conf = atof((StringHelper::extractXML(paramXML,"MinConf",1,true)).c_str());
 	min_density = atof((StringHelper::extractXML(paramXML,"MinDensity",1,true)).c_str());
 

@@ -50,9 +50,9 @@ public:
 	string outputparams(string &inputXML, char &type);
 	void output_constraints(ostream& out, event_set& B);
 	void outputtype(char type, ostream& out,int ans);
-	void Generate_Parallel_CTMINEPI(string eList, int min_fr, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, string &epCntsXML);
-	void Generate_MOWCATL_RULES(double min_conf, int maxk, int lag, int min_fr, char type, const event_set& T, const event_set& C,int ans, char lag_type, string& ruleListXML, string& ruleCntsXML);
-	void Generate_Serial_CTMINEPI(string eList, int min_fr, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, int sources, const event_vec_vec& TimeFvec, string &epCntXML);
+	void Generate_Parallel_CTMINEPI(string eList, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, string &epCntsXML);
+	void Generate_MOWCATL_RULES(double min_conf, double min_density, int maxk, int lag, char type, const event_set& T, const event_set& C,int ans, char lag_type, string& ruleListXML, string& ruleCntsXML);
+	void Generate_Serial_CTMINEPI(string eList, double min_density, int& k, int wina, int winc, const event_set& A, const event_set& C, char type, int sources, const event_vec_vec& TimeFvec, string &epCntXML);
 	void Read_Serial_Data(string eList, const event_set& A, const event_set& C);
 	void Read_Parallel_Data(string eList, const event_set& A, const event_set& C);
 	string outputEpisodeCounts(double FrequencyThreshold, int Candidates, int FrequentEpisodes, int Iterations, unsigned int Time);
@@ -84,7 +84,7 @@ public:
 
 	
 private:
-	int  min_freq,
+	int  //min_freq,
 		 wina,
 		 winc,
 		 lag,

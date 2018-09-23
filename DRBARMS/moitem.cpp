@@ -89,11 +89,20 @@ double moitem::get_support() const
 }
 
 
-double moitem::get_density() const
+double moitem::get_density_ratio() const
 {
-	return density;
+	return density_ratio;
 }
 
+double moitem::get_local_density() const
+{
+	return local_density;
+}
+
+double moitem::get_relative_density_ratio() const
+{
+	return relative_density_ratio;
+}
 
 void moitem::set_support(int in_support)
 {
@@ -103,13 +112,30 @@ void moitem::set_support(int in_support)
 		support = 0;
 }
 
-void moitem::set_density(double in_density)
+void moitem::set_density_ratio(double in_density)
 {
 	if (in_density > 0)
-		density = in_density;
+		density_ratio = in_density;
 	else
-		density = 0;
+		density_ratio = 0;
 }
+
+void moitem::set_local_density(double in_density)
+{
+	if (in_density > 0)
+		local_density = in_density;
+	else
+		local_density = 0;
+}
+
+void moitem::set_relative_density_ratio(double in_density)
+{
+	if (in_density > 0)
+		relative_density_ratio = in_density;
+	else
+		relative_density_ratio = 0;
+}
+
 
 void moitem::update_support(int win)
 {
@@ -184,7 +210,10 @@ void moitem::set_conssupport(int in_support)
 int moitem::get_conssupport() const
 {return 0;}
 
-double moitem::cal_denisty_ratio() const
+double moitem::cal_density_ratio() const
+{return 0.0;}
+
+double moitem::cal_local_density() const
 {return 0.0;}
 
 void moitem::insertant(const t_stamp_vec& e) {};

@@ -79,7 +79,7 @@ int mop_ruleitem::get_antsupport() const
 	return antsupport;
 }
 
-double mop_ruleitem::cal_denisty_ratio()const
+double mop_ruleitem::cal_density_ratio()const
 {
 	double support = this->get_support();
 	double antsupport = this->antsupport;
@@ -92,6 +92,14 @@ double mop_ruleitem::cal_denisty_ratio()const
 	double ratio = localDens/globalDens;
 
 	return ratio;
+}
+
+double mop_ruleitem::cal_local_density()const
+{
+	double support = this->get_support();
+	double conssupport = this->conssupport;
+	double localDens = support/conssupport;
+	return localDens;
 }
 
 void mop_ruleitem::set_conssupport(int in_support)

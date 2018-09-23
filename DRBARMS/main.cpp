@@ -3,7 +3,6 @@
 #include <iostream>
 #include "XMLIntFace.h"
 #include "StringHelper.h"
-#include "cmdLineIntFace.h"
 #include "Timer.h"
 #include "Mowcatl.h"
 

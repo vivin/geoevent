@@ -54,7 +54,8 @@ public:
 	int get_antsupport() const;
 	void set_conssupport(int in_support);
 	int get_conssupport() const;
-	double cal_denisty_ratio()const;
+	double cal_density_ratio()const;
+	double cal_local_density()const;
 
 	virtual int getantnumberofevents() const;
 	virtual int getconsnumberofevents() const;
